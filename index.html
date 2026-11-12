@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lu PY · 作品集</title>
+<meta name="description" content="Lu PY 的作品集：单文件网页小工具、计算机视觉实验与手机上的小应用。">
+<meta name="theme-color" content="#0A0A0A">
+<style>
+:root{
+  --bg:#0A0A0A;
+  --panel:#111111;
+  --panel-2:#151515;
+  --line:#282828;
+  --line-soft:#1E1E1E;
+  --text:#F2F2F2;
+  --muted:#8C8C8C;
+  --dim:#5E5E5E;
+  --orange:#FF9915;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Consolas,"Liberation Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Microsoft YaHei","PingFang SC",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+  line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 78%);
+  mask-image:linear-gradient(to bottom,#000 0%,transparent 78%);
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+::selection{background:var(--orange);color:#000}
+.wrap{width:min(1120px,calc(100% - 48px));margin:0 auto;position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;height:66px;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(24px,calc((100vw - 1120px)/2));
+  background:rgba(10,10,10,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-soft);
+}
+.brand{font-size:1rem;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.brand .mark{background:var(--orange);color:#000;border-radius:5px;padding:1px 7px;margin-left:2px}
+.brand .sep{color:var(--dim);margin:0 10px;font-weight:400}
+.brand .handle{color:var(--muted);font-weight:500;font-size:.85rem;font-family:var(--mono)}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{
+  font-size:.85rem;color:var(--muted);transition:color .2s;position:relative;white-space:nowrap;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--orange);border-radius:2px;
+}
+.nav-links .ext{color:var(--text);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+.nav-links .ext:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 64px;position:relative;
+}
+.hero-inner{max-width:900px}
+.eyebrow{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--orange);margin:0 0 22px;
+}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:2px;background:var(--orange);vertical-align:middle;margin-right:12px}
+.hero h1{
+  font-size:clamp(3.6rem,10vw,8rem);line-height:.98;font-weight:800;letter-spacing:-.055em;
+  margin:0 0 22px;
+}
+.hero h1 .dot{color:var(--orange)}
+.tagline{
+  font-size:clamp(1.35rem,2.6vw,2rem);font-weight:600;letter-spacing:.01em;
+  margin:0 0 20px;color:var(--text);
+}
+.lede{max-width:620px;color:var(--muted);font-size:1rem;margin:0 0 26px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+.tags span{
+  font-family:var(--mono);font-size:.75rem;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:64px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:.9rem;font-weight:600;padding:11px 22px;border-radius:8px;
+  border:1px solid var(--line);color:var(--text);transition:.2s;
+}
+.btn:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#000}
+.btn.primary:hover{background:#ffae42;border-color:#ffae42;color:#000}
+.stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;
+  border-top:1px solid var(--line);padding-top:26px;max-width:760px;
+}
+.stats .stat{border-left:1px solid var(--line);padding-left:22px}
+.stats .stat:first-child{border-left:0;padding-left:0}
+.stats b{display:block;font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--orange);line-height:1.2}
+.stats span{font-size:.78rem;color:var(--muted)}
+
+/* ---------- sections ---------- */
+.section{padding:104px 0;scroll-margin-top:66px;border-top:1px solid var(--line-soft)}
+.section-head{margin-bottom:38px}
+.section-head h2{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:700;letter-spacing:-.03em;margin:0 0 12px}
+.section-head .desc{color:var(--muted);max-width:660px;margin:0;font-size:.95rem}
+.section-head .rule{width:100%;height:1px;background:var(--line);margin-top:28px}
+
+/* ---------- filters ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.filters button{
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  border-radius:999px;padding:8px 16px;font-size:.82rem;cursor:pointer;transition:.2s;
+}
+.filters button span{font-family:var(--mono);font-size:.72rem;opacity:.65;margin-left:6px}
+.filters button:hover{color:var(--text);border-color:#4A4A4A}
+.filters button.active{background:var(--orange);border-color:var(--orange);color:#000;font-weight:700}
+.filters button.active span{opacity:.7}
+
+/* ---------- cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.grid .card[hidden]{display:none}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:24px 24px 20px;display:flex;flex-direction:column;
+  transition:border-color .25s,transform .25s,background .25s;
+}
+.card:hover{border-color:var(--orange);transform:translateY(-3px);background:var(--panel-2)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:8px;background:var(--orange);color:#000;
+  font-family:var(--mono);font-size:.8rem;font-weight:700;
+}
+.lang{font-family:var(--mono);font-size:.72rem;color:var(--dim);letter-spacing:.06em}
+.card h3{font-size:1.12rem;font-weight:700;letter-spacing:-.01em;margin:0 0 10px;line-height:1.35}
+.card h3 a:hover{color:var(--orange)}
+.card .summary{color:var(--muted);font-size:.88rem;line-height:1.75;margin:0 0 18px;flex:1}
+.tech{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tech span{
+  font-family:var(--mono);font-size:.7rem;color:var(--muted);
+  border:1px solid var(--line-soft);border-radius:5px;padding:3px 8px;
+}
+.links{display:flex;flex-wrap:wrap;gap:18px;border-top:1px solid var(--line-soft);padding-top:14px}
+.links a{font-size:.8rem;color:var(--muted);transition:color .2s}
+.links a:hover{color:var(--orange)}
+.links a.live{color:var(--orange)}
+.links a.live:hover{color:#ffc069}
+
+/* ---------- stack ---------- */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stack-col{padding:28px 26px;border-right:1px solid var(--line)}
+.stack-col:last-child{border-right:0}
+.stack-col .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--orange);text-transform:uppercase;margin:0 0 18px}
+.stack-col ul{list-style:none;margin:0;padding:0}
+.stack-col li{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:.9rem;
+}
+.stack-col li:last-child{border-bottom:0}
+.stack-col li em{font-style:normal;color:var(--dim);font-family:var(--mono);font-size:.72rem}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+.quote{
+  margin:0 0 22px;padding-left:20px;border-left:2px solid var(--orange);
+  font-size:1.3rem;font-weight:600;line-height:1.6;
+}
+.about-grid p{color:var(--muted);font-size:.94rem;margin:0 0 14px}
+.about-grid p strong{color:var(--text);font-weight:600}
+.contact{border:1px solid var(--line);border-radius:12px;padding:26px;background:var(--panel)}
+.contact .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--orange);margin:0 0 16px}
+.contact a{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:.9rem}
+.contact a:last-child{border-bottom:0}
+.contact a:hover{color:var(--orange)}
+.contact small{display:block;color:var(--dim);margin-top:18px;font-size:.78rem;line-height:1.6}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:36px 0 48px;margin-top:20px}
+.footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.footer-mark{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--muted)}
+.footer-mark .sq{width:14px;height:14px;border-radius:4px;background:var(--orange)}
+.footer-meta{font-family:var(--mono);font-size:.72rem;color:var(--dim);letter-spacing:.04em}
+footer a:hover{color:var(--orange)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.show{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .about-grid{grid-template-columns:1fr;gap:28px}
+  .stack-col{border-right:0;border-bottom:1px solid var(--line)}
+  .stack-col:last-child{border-bottom:0}
+}
+@media(max-width:640px){
+  .wrap{width:min(100% - 32px,1120px)}
+  .nav{padding:0 16px;height:60px}
+  .brand .sep,.brand .handle{display:none}
+  .nav-links{gap:14px}
+  .nav-links a{font-size:.78rem}
+  .nav-links .hide-sm{display:none}
+  .hero{min-height:auto;padding:130px 0 72px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:22px 0}
+  .stats .stat:nth-child(3){border-left:0;padding-left:0}
+  .section{padding:72px 0;scroll-margin-top:60px}
+  .grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .card,.btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="#top">Git<span class="mark">Hub</span><span class="sep">/</span><span class="handle">yukhughkui</span></a>
+  <nav class="nav-links">
+    <a href="#work">作品</a>
+    <a href="#stack">技术栈</a>
+    <a href="#about" class="hide-sm">关于</a>
+    <a class="ext" href="https://github.com/yukhughkui" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Portfolio · 2026</p>
+      <h1 id="hero-title">Lu PY<span class="dot">.</span></h1>
+      <p class="tagline">做点能点开就用的小东西。</p>
+      <p class="lede">偏爱单文件、离线可用的网页小工具，也做看得见的模型实验和手机上的小应用。能在浏览器里跑完的事，就别麻烦服务器。</p>
+      <div class="tags">
+        <span>本地优先</span><span>单文件网页</span><span>数据可视化</span><span>轻量交互</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="#work">看作品 ↓</a>
+        <a class="btn" href="https://github.com/yukhughkui?tab=repositories" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>09</b><span>公开作品</span></div>
+        <div class="stat"><b>04</b><span>主要语言</span></div>
+        <div class="stat"><b>02</b><span>在线预览</span></div>
+        <div class="stat"><b>01</b><span>原则：够用就好</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="section" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Selected Work</p>
+        <h2 id="work-title">作品索引</h2>
+        <p class="desc">按类型整理，全部来自 GitHub 上真实存在的仓库。点标题看源码，带「在线预览」的可以直接打开。</p>
+        <div class="rule"></div>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="按类型筛选作品">
+        <button type="button" data-filter="all" class="active">全部 <span>9</span></button>
+        <button type="button" data-filter="web">网页工具 <span>4</span></button>
+        <button type="button" data-filter="vision">视觉与模型 <span>3</span></button>
+        <button type="button" data-filter="mobile">移动端 <span>1</span></button>
+        <button type="button" data-filter="archive">早期存档 <span>1</span></button>
+      </div>
+
+      <div class="grid" id="grid">
+
+        <article class="card reveal" data-cat="web">
+          <div class="card-top"><span class="num">01</span><span class="lang">JavaScript</span></div>
+          <h3><a href="https://github.com/yukhughkui/qingdao" target="_blank" rel="noopener">qingdao · 轻岛</a></h3>
+          <p class="summary">运动与习惯记录 × 体重趋势 × 小岛养成。记录日常活动、积累能量、解锁岛上风景，让习惯养成多一点趣味、少一点压力；体重只是可选记录，不作为奖励或评价依据。</p>
+          <div class="tech"><span>JavaScript</span><span>习惯养成</span><span>数据可视化</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/qingdao" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/qingdao/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="web">
+          <div class="card-top"><span class="num">02</span><span class="lang">HTML</span></div>
+          <h3><a href="https://github.com/yukhughkui/spc-charts" target="_blank" rel="noopener">spc-charts</a></h3>
+          <p class="summary">SPC 控制图工具：覆盖 x̄-s / x̄-R / Me-R / I-MR / p / np / u / c 共 8 种常规控制图。单文件网页，输入数据即出图。</p>
+          <div class="tech"><span>HTML</span><span>单文件</span><span>SPC</span><span>控制图</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/spc-charts" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="web">
+          <div class="card-top"><span class="num">03</span><span class="lang">HTML</span></div>
+          <h3><a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">rainy-night-convenience-corner</a></h3>
+          <p class="summary">雨夜便利店一角：单文件、离线可用的 3D 立体场景，卡通渲染的动画风格。</p>
+          <div class="tech"><span>HTML</span><span>单文件</span><span>离线 3D</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="web">
+          <div class="card-top"><span class="num">04</span><span class="lang">HTML</span></div>
+          <h3><a href="https://github.com/yukhughkui/Table-tennis" target="_blank" rel="noopener">Table-tennis</a></h3>
+          <p class="summary">课程作业，一个可以直接在浏览器里打开的乒乓球小页面。</p>
+          <div class="tech"><span>HTML</span><span>课程作业</span><span>在线可玩</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/Table-tennis" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/Table-tennis/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="vision">
+          <div class="card-top"><span class="num">05</span><span class="lang">Python</span></div>
+          <h3><a href="https://github.com/yukhughkui/steel-defect-detection-cbam" target="_blank" rel="noopener">steel-defect-detection-cbam</a></h3>
+          <p class="summary">NEU-DET 钢材表面缺陷识别：HOG+SVM / BaseCNN / CBAM-CNN 三级对比，附小样本实验与 Grad-CAM 可视化。</p>
+          <div class="tech"><span>Python</span><span>CBAM</span><span>Grad-CAM</span><span>对比实验</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/steel-defect-detection-cbam" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="vision">
+          <div class="card-top"><span class="num">06</span><span class="lang">Python</span></div>
+          <h3><a href="https://github.com/yukhughkui/mnist-pca-ensemble" target="_blank" rel="noopener">mnist-pca-ensemble</a></h3>
+          <p class="summary">PCA 特征降维与多分类器集成的手写数字识别，准确率 98.27%；含浏览器画板演示与课程论文。</p>
+          <div class="tech"><span>Python</span><span>PCA</span><span>集成分类</span><span>98.27%</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/mnist-pca-ensemble" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="vision">
+          <div class="card-top"><span class="num">07</span><span class="lang">Python</span></div>
+          <h3><a href="https://github.com/yukhughkui/mask-detection-yolov8" target="_blank" rel="noopener">mask-detection-yolov8</a></h3>
+          <p class="summary">摄像头实时口罩检测（YOLOv8n）：绿框表示戴好口罩，红框表示没戴。</p>
+          <div class="tech"><span>Python</span><span>YOLOv8n</span><span>实时检测</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/mask-detection-yolov8" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="mobile">
+          <div class="card-top"><span class="num">08</span><span class="lang">Kotlin</span></div>
+          <h3><a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">tapcounter</a></h3>
+          <p class="summary">手机之问：通过无障碍服务统计每天点击、滑动、碰屏次数的本地安卓应用。</p>
+          <div class="tech"><span>Kotlin</span><span>Android</span><span>无障碍服务</span><span>本地统计</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+        <article class="card reveal" data-cat="archive">
+          <div class="card-top"><span class="num">09</span><span class="lang">—</span></div>
+          <h3><a href="https://github.com/yukhughkui/music" target="_blank" rel="noopener">music</a></h3>
+          <p class="summary">早期留下的仓库，暂无说明。</p>
+          <div class="tech"><span>早期存档</span></div>
+          <div class="links"><a href="https://github.com/yukhughkui/music" target="_blank" rel="noopener">源码 ↗</a></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="section" aria-labelledby="stack-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Stack & Principles</p>
+        <h2 id="stack-title">技术栈与做法</h2>
+        <p class="desc">不追新，够用就好。以下是这些项目里真正用到的东西。</p>
+        <div class="rule"></div>
+      </div>
+      <div class="stack-grid reveal">
+        <div class="stack-col">
+          <p class="kicker">Languages</p>
+          <ul>
+            <li>Python <em>模型 / 实验</em></li>
+            <li>JavaScript <em>交互逻辑</em></li>
+            <li>HTML · CSS <em>单文件网页</em></li>
+            <li>Kotlin <em>Android</em></li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <p class="kicker">Tools</p>
+          <ul>
+            <li>YOLOv8 <em>实时检测</em></li>
+            <li>CBAM · Grad-CAM <em>可解释性</em></li>
+            <li>PCA · 集成分类 <em>降维与识别</em></li>
+            <li>SPC 控制图 <em>统计可视化</em></li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <p class="kicker">Principles</p>
+          <ul>
+            <li>本地优先 <em>不依赖服务器</em></li>
+            <li>单文件优先 <em>打开即用</em></li>
+            <li>数据可见 <em>结果要能看懂</em></li>
+            <li>少即是多 <em>不打扰人</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">About</p>
+        <h2 id="about-title">关于</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="quote">「把想法做成点开就能用的东西。」</p>
+          <p>这些项目大多从一个很具体的念头开始：想看一眼今天碰了多少次屏幕，想把一串数据直接变成控制图，想让习惯记录别那么像打卡。<strong>做完、能打开、能被用一次</strong>，比做得大而全更重要。</p>
+          <p>所以这里没有复杂部署，也没有需要注册才能试的东西。多数是一个 HTML 文件，存下来双击就能跑；模型实验也都留着可复现的对比与结果。</p>
+        </div>
+        <div class="contact reveal">
+          <p class="kicker">Find me</p>
+          <a href="https://github.com/yukhughkui" target="_blank" rel="noopener">GitHub 主页 <span>↗</span></a>
+          <a href="https://github.com/yukhughkui?tab=repositories" target="_blank" rel="noopener">全部仓库 <span>↗</span></a>
+          <a href="https://github.com/yukhughkui/yukhughkui" target="_blank" rel="noopener">Profile README <span>↗</span></a>
+          <small>有问题或想法，欢迎在仓库里提 issue。<br>打招呼的方式：Bonjour | Здравствуйте | مرحبا | ¡Hola!</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-mark"><span class="sq"></span><span>云渡禅穹 · 在快节奏的世界里慢慢写字</span></div>
+    <div class="footer-meta">© 2026 Lu PY · <a href="https://github.com/yukhughkui" target="_blank" rel="noopener">github.com/yukhughkui ↗</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filters button'));
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      cards.forEach(function(card){
+        card.hidden = (f !== 'all' && card.getAttribute('data-cat') !== f);
+      });
+    });
+  });
+
+  var revealables = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    revealables.forEach(function(el){ io.observe(el); });
+  } else {
+    revealables.forEach(function(el){ el.classList.add('show'); });
+  }
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  if ('IntersectionObserver' in window) {
+    var so = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          navLinks.forEach(function(a){
+            a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    Array.prototype.slice.call(document.querySelectorAll('section[id]')).forEach(function(s){ so.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
