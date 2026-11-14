@@ -348,6 +348,20 @@ footer a:hover{color:var(--orange)}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .reveal.show{opacity:1;transform:none}
 
+/* ---------- archive row: only when the grid has three columns ---------- */
+@media(min-width:1050px){
+  .archive-row{
+    grid-column:1/-1;flex-direction:row;align-items:center;gap:20px;
+    padding:18px 26px;border-style:dashed;background:rgba(255,255,255,.035);
+  }
+  .archive-row .card-top{margin-bottom:0;flex:none}
+  .archive-row .lang{display:none}
+  .archive-row h3{margin:0;flex:none;font-size:1rem}
+  .archive-row .summary{margin:0;flex:1;font-size:.84rem}
+  .archive-row .tech{margin:0;flex:none}
+  .archive-row .links{border-top:0;padding-top:0;flex:none}
+}
+
 /* ---------- responsive ---------- */
 @media(max-width:1100px){
   .hero-art{display:none}
@@ -416,9 +430,9 @@ footer a:hover{color:var(--orange)}
         <a class="btn" href="https://github.com/yukhughkui?tab=repositories" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
       </div>
       <div class="stats">
-        <div class="stat"><b>09</b><span>公开作品</span></div>
-        <div class="stat"><b>04</b><span>主要语言</span></div>
-        <div class="stat"><b>02</b><span>在线预览</span></div>
+        <div class="stat"><b>10</b><span>公开作品</span></div>
+        <div class="stat"><b>05</b><span>主要语言</span></div>
+        <div class="stat"><b>09</b><span>在线预览</span></div>
         <div class="stat"><b>01</b><span>原则：够用就好</span></div>
       </div>
     </div>
@@ -427,7 +441,7 @@ footer a:hover{color:var(--orange)}
 
   <div class="strip" aria-hidden="true">
     <div class="wrap strip-inner">
-      <i></i><strong>SELECTED WORK</strong><i></i><span>09 PROJECTS</span><i></i><span>LOCAL FIRST</span>
+      <i></i><strong>SELECTED WORK</strong><i></i><span>10 PROJECTS</span><i></i><span>09 LIVE DEMOS</span><i></i><span>LOCAL FIRST</span>
       <i></i><span>SINGLE FILE</span><i></i><span>NO SIGN-UP</span><i></i><span>OPEN IN BROWSER</span>
     </div>
   </div>
@@ -438,25 +452,26 @@ footer a:hover{color:var(--orange)}
       <div class="section-head reveal">
         <p class="eyebrow">Selected Work</p>
         <h2 id="work-title">作品索引</h2>
-        <p class="desc">按类型整理，全部来自 GitHub 上真实存在的仓库。点标题看源码，带「在线预览」的可以直接打开。</p>
+        <p class="desc">按类型整理，全部来自 GitHub 上真实存在的仓库。点标题看源码，带「在线预览」的可以直接在浏览器里打开。</p>
         <div class="rule"></div>
       </div>
 
       <div class="filters reveal" role="group" aria-label="按类型筛选作品">
-        <button type="button" data-filter="all" class="active">全部 <span>9</span></button>
-        <button type="button" data-filter="web">网页工具 <span>4</span></button>
-        <button type="button" data-filter="vision">视觉与模型 <span>3</span></button>
-        <button type="button" data-filter="mobile">移动端 <span>1</span></button>
+        <button type="button" data-filter="all" class="active">全部 <span>10</span></button>
+        <button type="button" data-filter="web">网页工具 <span>3</span></button>
+        <button type="button" data-filter="vision">视觉与模型 <span>4</span></button>
+        <button type="button" data-filter="mobile">移动端 <span>2</span></button>
         <button type="button" data-filter="archive">早期存档 <span>1</span></button>
       </div>
+
 
       <div class="grid" id="grid">
 
         <article class="card reveal" data-cat="web">
           <div class="card-top"><span class="num">01</span><span class="lang">JavaScript</span></div>
           <h3><a href="https://github.com/yukhughkui/qingdao" target="_blank" rel="noopener">qingdao · 轻岛</a></h3>
-          <p class="summary">运动与习惯记录 × 体重趋势 × 小岛养成。记录日常活动、积累能量、解锁岛上风景，让习惯养成多一点趣味、少一点压力；体重只是可选记录，不作为奖励或评价依据。</p>
-          <div class="tech"><span>JavaScript</span><span>习惯养成</span><span>数据可视化</span></div>
+          <p class="summary">运动与习惯记录 × 体重趋势 × 小岛养成。网站版无需构建与后端，记录日常活动、积累能量、解锁岛上风景；体重只是可选记录，不作为奖励或评价依据。</p>
+          <div class="tech"><span>JavaScript</span><span>习惯养成</span><span>本地存储</span></div>
           <div class="links">
             <a href="https://github.com/yukhughkui/qingdao" target="_blank" rel="noopener">源码 ↗</a>
             <a class="live" href="https://yukhughkui.github.io/qingdao/" target="_blank" rel="noopener">在线预览 ↗</a>
@@ -466,21 +481,16 @@ footer a:hover{color:var(--orange)}
         <article class="card reveal" data-cat="web">
           <div class="card-top"><span class="num">02</span><span class="lang">HTML</span></div>
           <h3><a href="https://github.com/yukhughkui/spc-charts" target="_blank" rel="noopener">spc-charts</a></h3>
-          <p class="summary">SPC 控制图工具：覆盖 x̄-s / x̄-R / Me-R / I-MR / p / np / u / c 共 8 种常规控制图。单文件网页，输入数据即出图。</p>
-          <div class="tech"><span>HTML</span><span>单文件</span><span>SPC</span><span>控制图</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/spc-charts" target="_blank" rel="noopener">源码 ↗</a></div>
+          <p class="summary">SPC 控制图工具：覆盖 x̄-s / x̄-R / Me-R / I-MR / p / np / u / c 共 8 种常规控制图。38KB 单文件网页，贴入数据即出图，计算全在浏览器本地完成。</p>
+          <div class="tech"><span>HTML</span><span>单文件</span><span>SPC</span><span>本地计算</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/spc-charts" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/spc-charts/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
         </article>
 
         <article class="card reveal" data-cat="web">
           <div class="card-top"><span class="num">03</span><span class="lang">HTML</span></div>
-          <h3><a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">rainy-night-convenience-corner</a></h3>
-          <p class="summary">雨夜便利店一角：单文件、离线可用的 3D 立体场景，卡通渲染的动画风格。</p>
-          <div class="tech"><span>HTML</span><span>单文件</span><span>离线 3D</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">源码 ↗</a></div>
-        </article>
-
-        <article class="card reveal" data-cat="web">
-          <div class="card-top"><span class="num">04</span><span class="lang">HTML</span></div>
           <h3><a href="https://github.com/yukhughkui/Table-tennis" target="_blank" rel="noopener">Table-tennis</a></h3>
           <p class="summary">课程作业，一个可以直接在浏览器里打开的乒乓球小页面。</p>
           <div class="tech"><span>HTML</span><span>课程作业</span><span>在线可玩</span></div>
@@ -491,39 +501,74 @@ footer a:hover{color:var(--orange)}
         </article>
 
         <article class="card reveal" data-cat="vision">
+          <div class="card-top"><span class="num">04</span><span class="lang">HTML</span></div>
+          <h3><a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">rainy-night-convenience-corner</a></h3>
+          <p class="summary">同一提示词下四个模型的生成对照：混元 3 / Hy4 / DeepSeek-V4-Pro / DeepSeek-V4.1-Flash。三渲二卡通渲染的雨夜便利店微缩 3D，可拖拽旋转缩放。</p>
+          <div class="tech"><span>HTML</span><span>Three.js</span><span>WebGL</span><span>模型对照</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/rainy-night-convenience-corner" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/rainy-night-convenience-corner/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="vision">
           <div class="card-top"><span class="num">05</span><span class="lang">Python</span></div>
           <h3><a href="https://github.com/yukhughkui/steel-defect-detection-cbam" target="_blank" rel="noopener">steel-defect-detection-cbam</a></h3>
-          <p class="summary">NEU-DET 钢材表面缺陷识别：HOG+SVM / BaseCNN / CBAM-CNN 三级对比，附小样本实验与 Grad-CAM 可视化。</p>
-          <div class="tech"><span>Python</span><span>CBAM</span><span>Grad-CAM</span><span>对比实验</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/steel-defect-detection-cbam" target="_blank" rel="noopener">源码 ↗</a></div>
+          <p class="summary">NEU-DET 六类钢材表面缺陷识别：HOG+SVM / BaseCNN / CBAM-CNN 三级对比，附小样本实验与 Grad-CAM；网页版上传图片即可在浏览器本地识别。</p>
+          <div class="tech"><span>Python</span><span>CBAM</span><span>Grad-CAM</span><span>浏览器推理</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/steel-defect-detection-cbam" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/steel-defect-detection-cbam/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
         </article>
 
         <article class="card reveal" data-cat="vision">
           <div class="card-top"><span class="num">06</span><span class="lang">Python</span></div>
           <h3><a href="https://github.com/yukhughkui/mnist-pca-ensemble" target="_blank" rel="noopener">mnist-pca-ensemble</a></h3>
-          <p class="summary">PCA 特征降维与多分类器集成的手写数字识别，准确率 98.27%；含浏览器画板演示与课程论文。</p>
+          <p class="summary">PCA 特征降维 + 五种分类器软投票集成的手写数字识别，准确率 98.27%；含浏览器画板在线演示、一键复现实验与课程论文。</p>
           <div class="tech"><span>Python</span><span>PCA</span><span>集成分类</span><span>98.27%</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/mnist-pca-ensemble" target="_blank" rel="noopener">源码 ↗</a></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/mnist-pca-ensemble" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/mnist-pca-ensemble/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
         </article>
 
         <article class="card reveal" data-cat="vision">
           <div class="card-top"><span class="num">07</span><span class="lang">Python</span></div>
           <h3><a href="https://github.com/yukhughkui/mask-detection-yolov8" target="_blank" rel="noopener">mask-detection-yolov8</a></h3>
-          <p class="summary">摄像头实时口罩检测（YOLOv8n）：绿框表示戴好口罩，红框表示没戴。</p>
-          <div class="tech"><span>Python</span><span>YOLOv8n</span><span>实时检测</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/mask-detection-yolov8" target="_blank" rel="noopener">源码 ↗</a></div>
+          <p class="summary">YOLOv8n 摄像头实时口罩检测：绿框 Mask OK、红框 NO Mask，mAP50 76.2%。网页版可摄像头实时检测或上传图片，模型在浏览器本地运行。</p>
+          <div class="tech"><span>Python</span><span>YOLOv8n</span><span>实时检测</span><span>浏览器推理</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/mask-detection-yolov8" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/mask-detection-yolov8/" target="_blank" rel="noopener">在线预览 ↗</a>
+          </div>
         </article>
 
         <article class="card reveal" data-cat="mobile">
           <div class="card-top"><span class="num">08</span><span class="lang">Kotlin</span></div>
-          <h3><a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">tapcounter</a></h3>
-          <p class="summary">手机之问：通过无障碍服务统计每天点击、滑动、碰屏次数的本地安卓应用。</p>
+          <h3><a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">tapcounter · 手机之问</a></h3>
+          <p class="summary">每天到底点了多少次手机？通过无障碍服务统计点击、滑动、碰屏次数的本地安卓应用，不联网、不上传；v2.0 起更名「手机之问」，含五套主题。</p>
           <div class="tech"><span>Kotlin</span><span>Android</span><span>无障碍服务</span><span>本地统计</span></div>
-          <div class="links"><a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">源码 ↗</a></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/tapcounter" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/tapcounter/%E6%89%8B%E6%9C%BA%E4%B9%8B%E9%97%AE%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D.html" target="_blank" rel="noopener">产品介绍 ↗</a>
+          </div>
         </article>
 
-        <article class="card reveal" data-cat="archive">
-          <div class="card-top"><span class="num">09</span><span class="lang">—</span></div>
+        <article class="card reveal" data-cat="mobile">
+          <div class="card-top"><span class="num">09</span><span class="lang">Java</span></div>
+          <h3><a href="https://github.com/yukhughkui/guangyin-changhe" target="_blank" rel="noopener">guangyin-changhe · 光阴长河</a></h3>
+          <p class="summary">已在此间，前路尚有。以写意河流记录走过的时光与按预期寿命推算的剩余岁月，含 2×2 / 4×2 桌面小组件；另有免安装网页版，数据只留本地。</p>
+          <div class="tech"><span>Java</span><span>Android</span><span>桌面小组件</span><span>网页版</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/guangyin-changhe" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/guangyin-changhe/" target="_blank" rel="noopener">在线预览 ↗</a>
+            <a href="https://github.com/yukhughkui/guangyin-changhe/releases/latest/download/guangyin-changhe.apk" target="_blank" rel="noopener">下载 APK ↗</a>
+          </div>
+        </article>
+
+        <article class="card reveal archive-row" data-cat="archive">
+          <div class="card-top"><span class="num">10</span><span class="lang">—</span></div>
           <h3><a href="https://github.com/yukhughkui/music" target="_blank" rel="noopener">music</a></h3>
           <p class="summary">早期留下的仓库，暂无说明。</p>
           <div class="tech"><span>早期存档</span></div>
@@ -550,15 +595,15 @@ footer a:hover{color:var(--orange)}
             <li>Python <em>模型 / 实验</em></li>
             <li>JavaScript <em>交互逻辑</em></li>
             <li>HTML · CSS <em>单文件网页</em></li>
-            <li>Kotlin <em>Android</em></li>
+            <li>Kotlin · Java <em>Android</em></li>
           </ul>
         </div>
         <div class="stack-col">
           <p class="kicker"><span class="col-no">02</span> Tools</p>
           <ul>
-            <li>YOLOv8 <em>实时检测</em></li>
-            <li>CBAM · Grad-CAM <em>可解释性</em></li>
+            <li>YOLOv8 · CBAM <em>检测与分类</em></li>
             <li>PCA · 集成分类 <em>降维与识别</em></li>
+            <li>Three.js · WebGL <em>3D 场景</em></li>
             <li>SPC 控制图 <em>统计可视化</em></li>
           </ul>
         </div>
@@ -587,7 +632,7 @@ footer a:hover{color:var(--orange)}
         <div class="reveal">
           <p class="quote"><span class="quote-tag">NOTE / 01</span>「把想法做成点开就能用的东西。」</p>
           <p>这些项目大多从一个很具体的念头开始：想看一眼今天碰了多少次屏幕，想把一串数据直接变成控制图，想让习惯记录别那么像打卡。<strong>做完、能打开、能被用一次</strong>，比做得大而全更重要。</p>
-          <p>所以这里没有复杂部署，也没有需要注册才能试的东西。多数是一个 HTML 文件，存下来双击就能跑；模型实验也都留着可复现的对比与结果。</p>
+          <p>所以这里没有复杂部署，也没有需要注册才能试的东西。多数是一个 HTML 文件，存下来双击就能跑；模型实验也陆续搬进了浏览器，点开链接就能上手，数据仍留在本地。</p>
         </div>
         <div class="contact reveal">
           <p class="kicker">Find me</p>
