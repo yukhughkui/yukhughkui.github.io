@@ -236,6 +236,7 @@ button{font-family:inherit}
 .card[data-cat="vision"]::before{background:linear-gradient(90deg,#7C8CF0,#B79BFF)}
 .card[data-cat="mobile"]::before{background:linear-gradient(90deg,#2FD0B4,#7CE8D4)}
 .card[data-cat="reverse"]::before{background:linear-gradient(90deg,var(--orange),#FFC766)}
+.card[data-cat="games"]::before{background:linear-gradient(90deg,#3ED8B0,#A0F0DC)}
 .card::after{
   content:"";position:absolute;right:-60px;top:-60px;width:170px;height:170px;border-radius:50%;
   background:radial-gradient(circle,rgba(58,169,232,.16),transparent 70%);pointer-events:none;
@@ -363,6 +364,10 @@ footer a:hover{color:var(--orange)}
   .wide-row .summary{margin:0;flex:1;min-width:0;font-size:.84rem}
   .wide-row .tech{display:none}
   .wide-row .links{border-top:0;padding-top:0;flex:none;gap:14px}
+  .wide-row-teal{
+    border-color:rgba(47,208,180,.45);
+    background:linear-gradient(100deg,rgba(47,208,180,.10),rgba(255,255,255,.035));
+  }
 }
 
 /* ---------- responsive ---------- */
@@ -433,9 +438,9 @@ footer a:hover{color:var(--orange)}
         <a class="btn" href="https://github.com/yukhughkui?tab=repositories" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
       </div>
       <div class="stats">
-        <div class="stat"><b>10</b><span>公开作品</span></div>
+        <div class="stat"><b>11</b><span>公开作品</span></div>
         <div class="stat"><b>05</b><span>主要语言</span></div>
-        <div class="stat"><b>09</b><span>在线预览</span></div>
+        <div class="stat"><b>10</b><span>在线预览</span></div>
         <div class="stat"><b>01</b><span>原则：够用就好</span></div>
       </div>
     </div>
@@ -444,7 +449,7 @@ footer a:hover{color:var(--orange)}
 
   <div class="strip" aria-hidden="true">
     <div class="wrap strip-inner">
-      <i></i><strong>SELECTED WORK</strong><i></i><span>10 PROJECTS</span><i></i><span>09 LIVE DEMOS</span><i></i><span>LOCAL FIRST</span>
+      <i></i><strong>SELECTED WORK</strong><i></i><span>11 PROJECTS</span><i></i><span>10 LIVE DEMOS</span><i></i><span>LOCAL FIRST</span>
       <i></i><span>SINGLE FILE</span><i></i><span>NO SIGN-UP</span><i></i><span>OPEN IN BROWSER</span>
     </div>
   </div>
@@ -460,11 +465,12 @@ footer a:hover{color:var(--orange)}
       </div>
 
       <div class="filters reveal" role="group" aria-label="按类型筛选作品">
-        <button type="button" data-filter="all" class="active">全部 <span>10</span></button>
+        <button type="button" data-filter="all" class="active">全部 <span>11</span></button>
         <button type="button" data-filter="web">网页工具 <span>3</span></button>
         <button type="button" data-filter="vision">视觉与模型 <span>4</span></button>
         <button type="button" data-filter="mobile">移动端 <span>2</span></button>
         <button type="button" data-filter="reverse">逆向与汉化 <span>1</span></button>
+        <button type="button" data-filter="games">网页游戏 <span>1</span></button>
       </div>
 
 
@@ -586,6 +592,21 @@ footer a:hover{color:var(--orange)}
           </div>
         </article>
 
+        <article class="card reveal wide-row wide-row-teal" data-cat="games">
+          <div class="card-top"><span class="num">11</span><span class="lang">HTML</span></div>
+          <h3><a href="https://github.com/yukhughkui/fable-games" target="_blank" rel="noopener">fable-games · 五款单文件网页游戏</a></h3>
+          <p class="summary">受 Fable 5.2 启发：画面由 Canvas / WebGL 逐像素生成，音乐与音效由 Web Audio 实时合成，零素材、零依赖。传灯、鹤渡、星弦、星槎、落款，五款各一种画种与玩法，点开即玩。</p>
+          <div class="tech"><span>单文件</span><span>Canvas</span><span>Web Audio</span></div>
+          <div class="links">
+            <a href="https://github.com/yukhughkui/fable-games" target="_blank" rel="noopener">源码 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/fable-games/passing-lamp/" target="_blank" rel="noopener">传灯 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/fable-games/azure-crane/" target="_blank" rel="noopener">鹤渡 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/fable-games/astral-chord/" target="_blank" rel="noopener">星弦 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/fable-games/lumen-drift/" target="_blank" rel="noopener">星槎 ↗</a>
+            <a class="live" href="https://yukhughkui.github.io/fable-games/luokuan/" target="_blank" rel="noopener">落款 ↗</a>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -616,6 +637,7 @@ footer a:hover{color:var(--orange)}
             <li>PCA · 集成分类 <em>降维与识别</em></li>
             <li>Three.js · WebGL <em>3D 场景</em></li>
             <li>SPC 控制图 <em>统计可视化</em></li>
+            <li>Web Audio <em>程序化配乐</em></li>
           </ul>
         </div>
         <div class="stack-col">
